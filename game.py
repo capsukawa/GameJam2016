@@ -22,6 +22,8 @@ invader = load_image("/tutos/les_evenements/InvaderA_00.png")
 invader_rect = invader.get_rect()
 my_hero = load_image("/tutos/les_evenements/InvaderB_00.png")
 my_hero_rect = my_hero.get_rect()
+bstack1 = []
+bstack2 = []
 
 while 1:
 	for event in pygame.event.get():
@@ -50,9 +52,20 @@ while 1:
 	if keys[pygame.K_DOWN] and my_hero_rect.bottom < height:
 		my_hero_rect = my_hero_rect.move(0, 5)
 
+	if keys[pygame.K_SPACE]:
+		bstack1.append(load_image("/bullet.png"))
+		if bstack1:
+			bstack2.append(bstack1[len(bstack1)-1].get_rect())
+			bstack2[len(bstack2)-1] = my_hero_rect
+			print(bstack2)
+			for item in bstack2:
+				item = item.move(0,-5)
+
 	screen.blit(background_image, background_position)
 	screen.blit(invader, invader_rect)
 	screen.blit(my_hero, my_hero_rect)
+	for item in bstack2:
+		screen.blit(bstack1[0],item)
 
 	pygame.display.flip()
 	screen.blit
