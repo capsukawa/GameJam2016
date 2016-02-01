@@ -2,6 +2,7 @@ import os
 import pygame
 import sys
 import util
+import classes
 
 def play(screen):
 	jeu = 1
@@ -10,6 +11,8 @@ def play(screen):
 
 	background = util.load_image("background.png")
 	background_position = [0,0]
+
+	hero = classes.Hero()
 
 	while jeu==1:
 		for event in pygame.event.get():
