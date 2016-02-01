@@ -49,9 +49,9 @@ while 1:
 		if choix==0:
 			game.play(screen)
 		elif choix==1:
-			print("options")
-		elif choix==2:
 			print("regles")
+		elif choix==2:
+			print("options")
 		elif choix==3:
 			print("credits")
 		elif choix==4:
