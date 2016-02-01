@@ -10,7 +10,7 @@ def load_image(name):
 pygame.init()
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
-size = width, height = 640, 480
+size = width, height = 800, 600
 screen = pygame.display.set_mode(size)
 
 background = load_image("background.png")
