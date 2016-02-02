@@ -25,7 +25,7 @@ pygame.mixer.music.play(10)
 choix = 0
 timer = 0
 
-varOptions = [1,0,1]
+varOptions = [1,0,0]
 	# 0:(optSon) 0 = Mute / 1 = Play
 	# 1:(optGD) 0 = Droitier / 1 = Gaucher
 	# 2:(optTir) 0 = Manuel / 1 = Automatique
