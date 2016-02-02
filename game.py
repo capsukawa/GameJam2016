@@ -50,14 +50,14 @@ def play(screen,varOptions):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				sys.exit()
-
-		keys = pygame.key.get_pressed()
-		if keys[pygame.K_ESCAPE]:
-			jeu=0
-
+# Mise a jour des timers --------------------------------------------------------------------
 		marche-=1
 		timerPas-=1
 		timerTir-=1
+# Gestion des touches clavier --------------------------------------------------------------
+		keys = pygame.key.get_pressed()
+		if keys[pygame.K_ESCAPE]:
+			jeu=0
 		if keys[pygame.K_UP] and hero_rect.bottom>350:
 			hero_rect = hero_rect.move(0,-(cHero.vitesseDepl))
 			marche=5
@@ -70,9 +70,6 @@ def play(screen,varOptions):
 		if keys[pygame.K_RIGHT] and hero_rect.right<795:
 			hero_rect = hero_rect.move(cHero.vitesseDepl,0)
 			marche=5
-
-		if keys[pygame.K_y]:
-			cHero.vieCourante-=1
 
 		if keys[pygame.K_SPACE] or varOptions[2]==1:
 			if timerTir<=0:
@@ -102,10 +99,10 @@ def play(screen,varOptions):
 					timerPas=20
 			else:
 				 hero = heroDeb
-
+# Gestion une fois mort + Affichage menu etc ---------------------------------------------
 		if cHero.vieCourante<=0:
 			print("blbl")
-
+# Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background,background_position)
 		screen.blit(bg,bg_position)
 # Blit des projectiles -----------------------------------------------------------------------
