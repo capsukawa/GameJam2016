@@ -4,7 +4,7 @@ import sys
 import util
 import classes
 
-def play(screen):
+def play(screen,varOptions):
 	jeu = 1
 
 	pygame.init()
@@ -12,7 +12,11 @@ def play(screen):
 	background = util.load_image("background.png")
 	background_position = [0,0]
 
-	hero = classes.Hero()
+	cHero = classes.Hero()
+	hero = util.load_image("hero.png")
+	hero_rect = hero.get_rect()
+	hero_rect.centerx = 400
+	hero_rect.centery = 300
 
 	while jeu==1:
 		for event in pygame.event.get():
@@ -25,6 +29,7 @@ def play(screen):
 			jeu=0
 
 		screen.blit(background,background_position)
+		screen.blit(hero,hero_rect)
 
 		pygame.display.flip()
 		screen.blit

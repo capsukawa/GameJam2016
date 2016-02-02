@@ -7,6 +7,24 @@ def load_image(name):
     image = pygame.image.load(name)
     return image
 
+def credits(screen):
+	menuCredits = 1
+	pygame.init()
+	bgCredits = load_image("credits.png")
+	bgCredits_position = [0,0]
+	while menuCredits==1:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit()
+		keys = pygame.key.get_pressed()
+		if keys[pygame.K_ESCAPE]:
+			menuCredits=0
+		screen.blit(bgCredits,bgCredits_position)
+		pygame.display.flip()
+		screen.blit
+		pygame.time.wait(10)
+
+
 def options(screen,varOptions):
 	menuOptions = 1
 

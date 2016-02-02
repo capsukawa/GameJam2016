@@ -38,9 +38,6 @@ while 1:
 	#Gestion du clavier
 	keys = pygame.key.get_pressed()
 
-	#if varOptions[0]==0:
-	#	pygame.mixer.music.stop()
-
 	if keys[pygame.K_UP]:
 		if timer<=0:
 			timer=10
@@ -59,15 +56,13 @@ while 1:
 
 	if keys[pygame.K_SPACE]:
 		if choix==0:
-			game.play(screen)
+			game.play(screen,varOptions)
 		elif choix==1:
 			print("regles")
 		elif choix==2:
 			varOptions = util.options(screen,varOptions)
-			#if varOptions[0]==1:
-				#pygame.mixer.music.play(10)
 		elif choix==3:
-			print("credits")
+			util.credits(screen)
 		elif choix==4:
 			sys.exit()
 
