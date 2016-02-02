@@ -7,5 +7,5 @@ class Hero:
 	vieCourante = 20
 	puissance = 1
 	vitesseTir = 1
-	vitesseDepl = 10
+	vitesseDepl = 2
 	nbProjectiles = 1
