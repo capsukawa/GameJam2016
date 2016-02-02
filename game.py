@@ -13,12 +13,24 @@ def play(screen,varOptions):
 	background_position = [0,0]
 
 	cHero = classes.Hero()
-	hero = util.load_image("hero.png")
+	# Sprites du heros
+	heroDeb = util.load_image("hero.png")
 	heroPasG = util.load_image("heroPasG.png")
 	heroPasD = util.load_image("heroPasD.png")
+	if varOptions[1]==0:
+		heroDebA = util.load_image("heroDebAD.png")
+		heroPasDA = util.load_image("heroPasDAD.png")
+		heroPasGA = util.load_image("heroPasGAD.png")
+	else:
+		heroDebA = util.load_image("heroDebAG.png")
+		heroPasDA = util.load_image("heroPasDAG.png")
+		heroPasGA = util.load_image("heroPasGAG.png")
+	hero = heroDeb
+
 	timerPas = 0
 	marche = 20
 	pas=1
+	timerBullet=0
 	hero_rect = hero.get_rect()
 	hero_rect.centerx = 400
 	hero_rect.centery = 500
@@ -48,24 +60,34 @@ def play(screen,varOptions):
 			hero_rect = hero_rect.move(cHero.vitesseDepl,0)
 			marche=5
 
+		if keys[pygame.K_SPACE] or varOptions[2]==1:
+			if marche>0:
+				if pas==1:
+					hero = heroPasGA
+				else:
+					hero = heroPasDA
+				if timerPas<=0:
+					pas = abs(pas-1)
+					timerPas=20
+			else:
+				 hero = heroDebA
+		else:
+			if marche>0:
+				if pas==1:
+					hero = heroPasG
+				else:
+					hero = heroPasD
+				if timerPas<=0:
+					pas = abs(pas-1)
+					timerPas=20
+			else:
+				 hero = heroDeb
+
+
+
 
 		screen.blit(background,background_position)
-		if marche>0:
-			if timerPas<=0:
-				if pas==1:
-					screen.blit(heroPasG,hero_rect)
-					pas=0
-				elif pas==0:
-					screen.blit(heroPasD,hero_rect)
-					pas=1
-				timerPas=20
-			else:
-				if pas==1:
-					screen.blit(heroPasG,hero_rect)
-				elif pas==0:
-					screen.blit(heroPasD,hero_rect)
-		else:
-			screen.blit(hero,hero_rect)
+		screen.blit(hero,hero_rect)
 
 		pygame.display.flip()
 		screen.blit
