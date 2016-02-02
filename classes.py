@@ -9,3 +9,9 @@ class Hero:
 	vitesseTir = 1
 	vitesseDepl = 2
 	nbProjectiles = 1
+
+class Level:
+	def __init__(self,background):
+		self.bg = background
+		#self.boss = Enemy()
+		#self.mob = Enemy()

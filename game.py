@@ -83,9 +83,6 @@ def play(screen,varOptions):
 			else:
 				 hero = heroDeb
 
-
-
-
 		screen.blit(background,background_position)
 		screen.blit(hero,hero_rect)
 

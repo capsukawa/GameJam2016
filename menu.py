@@ -58,7 +58,7 @@ while 1:
 		if choix==0:
 			game.play(screen,varOptions)
 		elif choix==1:
-			print("regles")
+			util.regles(screen)
 		elif choix==2:
 			varOptions = util.options(screen,varOptions)
 		elif choix==3:

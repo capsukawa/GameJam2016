@@ -24,6 +24,22 @@ def credits(screen):
 		screen.blit
 		pygame.time.wait(10)
 
+def regles(screen):
+	menuRegles = 1
+	pygame.init()
+	bgRegles = load_image("regles.png")
+	bgRegles_position = [0,0]
+	while menuRegles==1:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit()
+		keys = pygame.key.get_pressed()
+		if keys[pygame.K_ESCAPE]:
+			menuRegles=0
+		screen.blit(bgRegles,bgRegles_position)
+		pygame.display.flip()
+		screen.blit
+		pygame.time.wait(10)
 
 def options(screen,varOptions):
 	menuOptions = 1
