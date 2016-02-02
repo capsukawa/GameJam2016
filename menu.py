@@ -16,18 +16,30 @@ menuPos = [98,199,300,401,502]
 
 select = util.load_image("select.png")
 select_rect = select.get_rect()
-select_rect.right = 510
+select_rect.right = 520
 select_rect.centery = menuPos[0]
+
+pygame.mixer.music.load("menutheme.mp3")
+pygame.mixer.music.play(10)
 
 choix = 0
 timer = 0
+
+varOptions = [1,0,1]
+	# 0:(optSon) 0 = Mute / 1 = Play
+	# 1:(optGD) 0 = Droitier / 1 = Gaucher
+	# 2:(optTir) 0 = Manuel / 1 = Automatique
 
 while 1:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			sys.exit()
 
+	#Gestion du clavier
 	keys = pygame.key.get_pressed()
+
+	#if varOptions[0]==0:
+	#	pygame.mixer.music.stop()
 
 	if keys[pygame.K_UP]:
 		if timer<=0:
@@ -51,11 +63,14 @@ while 1:
 		elif choix==1:
 			print("regles")
 		elif choix==2:
-			print("options")
+			varOptions = util.options(screen,varOptions)
+			#if varOptions[0]==1:
+				#pygame.mixer.music.play(10)
 		elif choix==3:
 			print("credits")
 		elif choix==4:
 			sys.exit()
+
 
 	timer-=1
 
