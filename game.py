@@ -71,6 +71,9 @@ def play(screen,varOptions):
 			hero_rect = hero_rect.move(cHero.vitesseDepl,0)
 			marche=5
 
+		if keys[pygame.K_y]:
+			cHero.vieCourante-=1
+
 		if keys[pygame.K_SPACE] or varOptions[2]==1:
 			if timerTir<=0:
 				timerTir=30*(1/cHero.vitesseTir)
@@ -116,9 +119,12 @@ def play(screen,varOptions):
 #-------------------------------------------------------------------------------------------
 		screen.blit(hero,hero_rect)
 # Blit de la barre de vie du heros ----------------------------------------------------------
-		
+		for i in range(1,((cHero.vieCourante*50)/cHero.viePleine)+1):
+			vie_rect = vie.get_rect()
+			vie_rect.centery = 579
+			vie_rect.left = 296+i*4
+			screen.blit(vie,vie_rect)
 #-------------------------------------------------------------------------------------------
-
 		pygame.display.flip()
 		screen.blit
 		pygame.time.wait(10)
