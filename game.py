@@ -8,12 +8,14 @@ levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png",
 
 def play(screen,varOptions):
 	jeu = 1
-
 	pygame.init()
-
-	background = util.load_image("background.png")
-	background_position = [0,0]
-
+# Background + Zone ---------------------------------------------------------------------
+	background = util.load_sprite("background.png")
+	niveauActuel = 0
+	bg = util.load_sprite(levelBg[niveauActuel])
+	bg.rect = [0,31]
+# Creation Classes Boss+Hero ------------------------------------------------------------
+	cBoss = classes.Enemy(classes.boss1)
 	cHero = classes.Hero()
 # Sprites du heros -------------------------------------------------------------------------
 	heroDeb = util.load_image("hero.png")
@@ -27,10 +29,6 @@ def play(screen,varOptions):
 		heroDebA = util.load_image("heroDebAG.png")
 		heroPasDA = util.load_image("heroPasDAG.png")
 		heroPasGA = util.load_image("heroPasGAG.png")
-	hero = heroDeb
-	hero_rect = hero.get_rect()
-	hero_rect.centerx = 400
-	hero_rect.centery = 500
 # Variables ---------------------------------------------------------------------------------
 	timerPas = 0
 	marche = 20
@@ -41,10 +39,6 @@ def play(screen,varOptions):
 	bullet_rects = []
 
 	vie = util.load_image("vie.png")
-
-	niveauActuel = 0
-	bg = util.load_image(levelBg[niveauActuel])
-	bg_position = [0,31]
 # Boucle du jeu ##############################################
 	while jeu==1:
 		for event in pygame.event.get():
@@ -58,68 +52,78 @@ def play(screen,varOptions):
 		keys = pygame.key.get_pressed()
 		if keys[pygame.K_ESCAPE]:
 			jeu=0
-		if keys[pygame.K_UP] and hero_rect.bottom>350:
-			hero_rect = hero_rect.move(0,-(cHero.vitesseDepl))
+		if keys[pygame.K_UP] and cHero.sprite.rect.bottom>350:
+			cHero.sprite.rect = cHero.sprite.rect.move(0,-(cHero.vitesseDepl))
 			marche=5
-		if keys[pygame.K_DOWN] and hero_rect.bottom<530:
-			hero_rect = hero_rect.move(0,cHero.vitesseDepl)
+		if keys[pygame.K_DOWN] and cHero.sprite.rect.bottom<530:
+			cHero.sprite.rect = cHero.sprite.rect.move(0,cHero.vitesseDepl)
 			marche=5
-		if keys[pygame.K_LEFT] and hero_rect.left>5:
-			hero_rect = hero_rect.move(-(cHero.vitesseDepl),0)
+		if keys[pygame.K_LEFT] and cHero.sprite.rect.left>5:
+			cHero.sprite.rect = cHero.sprite.rect.move(-(cHero.vitesseDepl),0)
 			marche=5
-		if keys[pygame.K_RIGHT] and hero_rect.right<795:
-			hero_rect = hero_rect.move(cHero.vitesseDepl,0)
+		if keys[pygame.K_RIGHT] and cHero.sprite.rect.right<795:
+			cHero.sprite.rect = cHero.sprite.rect.move(cHero.vitesseDepl,0)
 			marche=5
 
 		if keys[pygame.K_SPACE] or varOptions[2]==1:
 			if timerTir<=0:
 				timerTir=30*(1/cHero.vitesseTir)
 				tb = bullet.get_rect()
-				tb.left = (hero_rect.right+hero_rect.left)/2
-				tb.top = hero_rect.top-2
+				tb.left = (cHero.sprite.rect.right+cHero.sprite.rect.left)/2
+				tb.top = cHero.sprite.rect.top-2
 				bullet_rects.append(tb)
 			if marche>0:
 				if pas==1:
-					hero = heroPasGA
+					cHero.sprite.image = heroPasGA
 				else:
-					hero = heroPasDA
+					cHero.sprite.image = heroPasDA
 				if timerPas<=0:
 					pas = abs(pas-1)
 					timerPas=20
 			else:
-				 hero = heroDebA
+				 cHero.sprite.image = heroDebA
 		else:
 			if marche>0:
 				if pas==1:
-					hero = heroPasG
+					cHero.sprite.image = heroPasG
 				else:
-					hero = heroPasD
+					cHero.sprite.image = heroPasD
 				if timerPas<=0:
 					pas = abs(pas-1)
 					timerPas=20
 			else:
-				 hero = heroDeb
+				 cHero.sprite.image = heroDeb
 # Gestion une fois mort + Affichage menu etc ---------------------------------------------
 		if cHero.vieCourante<=0:
 			print("blbl")
 # Blit du background + zone de combat ---------------------------------------------------
-		screen.blit(background,background_position)
-		screen.blit(bg,bg_position)
+		screen.blit(background.image,background.rect)
+		screen.blit(bg.image,bg.rect)
 # Blit des projectiles -----------------------------------------------------------------------
 		bullet_vdb = 0
 		for i in bullet_rects:
 			if i.top<35:
 				bullet_rects.pop(bullet_vdb)
+			if i.top<cBoss.sprite.rect.bottom and i.centerx<cBoss.sprite.rect.right and i.centerx>cBoss.sprite.rect.left:
+				cBoss.vieCourante-=cHero.puissance
+				bullet_rects.pop(bullet_vdb)
 			i.top = i.top-10
 			screen.blit(bullet,i)
 			bullet_vdb+=1
 #-------------------------------------------------------------------------------------------
-		screen.blit(hero,hero_rect)
+		screen.blit(cHero.sprite.image,cHero.sprite.rect)
+		screen.blit(cBoss.sprite.image,cBoss.sprite.rect)
 # Blit de la barre de vie du heros ----------------------------------------------------------
 		for i in range(1,((cHero.vieCourante*50)/cHero.viePleine)+1):
 			vie_rect = vie.get_rect()
 			vie_rect.centery = 579
 			vie_rect.left = 296+i*4
+			screen.blit(vie,vie_rect)
+# Blit de la barre de vie du boss -----------------------------------------------------------
+		for i in range(1,((cBoss.vieCourante*125)/cBoss.viePleine)+1):
+			vie_rect = vie.get_rect()
+			vie_rect.centery = 15
+			vie_rect.left = 284+i*4
 			screen.blit(vie,vie_rect)
 #-------------------------------------------------------------------------------------------
 		pygame.display.flip()

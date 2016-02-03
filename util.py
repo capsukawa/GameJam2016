@@ -3,9 +3,16 @@ import pygame
 import os,inspect
 
 def load_image(name):
-    name = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))+'/images/'+name
-    image = pygame.image.load(name)
-    return image
+	name = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))+'/images/'+name
+	image = pygame.image.load(name).convert_alpha()
+	return image
+
+def load_sprite(name):
+	sprite = pygame.sprite.Sprite()
+	sprite.image = load_image(name)
+	sprite.rect = sprite.image.get_rect()
+	sprite.mask = pygame.mask.from_surface(sprite.image)
+	return sprite
 
 def credits(screen):
 	menuCredits = 1

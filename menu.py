@@ -9,15 +9,13 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 size = width, height = 800, 600
 screen = pygame.display.set_mode(size)
 
-background = util.load_image("menu.png")
-background_position = [0,0]
+background = util.load_sprite("menu.png")
 
 menuPos = [98,199,300,401,502]
 
-select = util.load_image("select.png")
-select_rect = select.get_rect()
-select_rect.right = 520
-select_rect.centery = menuPos[0]
+select = util.load_sprite("select.png")
+select.rect.right = 520
+select.rect.centery = menuPos[0]
 
 pygame.mixer.music.load("menutheme.mp3")
 pygame.mixer.music.play(10)
@@ -69,9 +67,9 @@ while 1:
 
 	timer-=1
 
-	screen.blit(background,background_position)
-	select_rect.centery = menuPos[choix]
-	screen.blit(select,select_rect)
+	screen.blit(background.image,background.rect)
+	select.rect.centery = menuPos[choix]
+	screen.blit(select.image,select.rect)
 
 	pygame.display.flip()
 	screen.blit
