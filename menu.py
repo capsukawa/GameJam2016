@@ -22,6 +22,7 @@ pygame.mixer.music.play(10)
 
 choix = 0
 timer = 0
+timerMenu = 0
 
 varOptions = [1,0,0]
 	# 0:(optSon) 0 = Mute / 1 = Play
@@ -52,9 +53,10 @@ while 1:
 			else:
 				choix+=1
 
-	if keys[pygame.K_SPACE]:
+	if keys[pygame.K_SPACE] and timerMenu<=0:
 		if choix==0:
 			game.play(screen,varOptions)
+			timerMenu=50
 		elif choix==1:
 			util.regles(screen)
 		elif choix==2:
@@ -66,6 +68,7 @@ while 1:
 
 
 	timer-=1
+	timerMenu-=1
 
 	screen.blit(background.image,background.rect)
 	select.rect.centery = menuPos[choix]

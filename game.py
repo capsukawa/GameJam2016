@@ -37,6 +37,8 @@ def play(screen,varOptions):
 	timerTir=0
 	bullet_rects = []
 
+	timerMenu = 20
+
 	vie = util.load_sprite("vie.png")
 # Boucle du jeu ##############################################
 	while jeu==1:
@@ -47,10 +49,13 @@ def play(screen,varOptions):
 		marche-=1
 		timerPas-=1
 		timerTir-=1
+		timerMenu-=1
 # Gestion des touches clavier --------------------------------------------------------------
 		keys = pygame.key.get_pressed()
-		if keys[pygame.K_ESCAPE]:
+
+		if keys[pygame.K_ESCAPE] and timerMenu<=0:
 			jeu=0
+
 		if keys[pygame.K_UP] and cHero.sprite.rect.bottom>350:
 			cHero.sprite.rect = cHero.sprite.rect.move(0,-(cHero.vitesseDepl))
 			marche=5
@@ -93,8 +98,16 @@ def play(screen,varOptions):
 			else:
 				 cHero.sprite.image = heroDeb
 # Gestion une fois mort + Affichage menu etc ---------------------------------------------
+		if keys[pygame.K_y]: # A VIRER DES QUE FINI
+			cHero.vieCourante-=1
+
+
 		if cHero.vieCourante<=0:
-			print("blbl")
+			cHero = util.upgrades(screen,cHero)
+			if cHero.vieCourante<=0:
+				jeu=0
+			else:
+				timerMenu=50
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)
