@@ -35,10 +35,9 @@ def play(screen,varOptions):
 	pas=1
 
 	timerTir=0
-	bullet = util.load_image("armes/rock.png")
 	bullet_rects = []
 
-	vie = util.load_image("vie.png")
+	vie = util.load_sprite("vie.png")
 # Boucle du jeu ##############################################
 	while jeu==1:
 		for event in pygame.event.get():
@@ -68,9 +67,9 @@ def play(screen,varOptions):
 		if keys[pygame.K_SPACE] or varOptions[2]==1:
 			if timerTir<=0:
 				timerTir=30*(1/cHero.vitesseTir)
-				tb = bullet.get_rect()
-				tb.left = (cHero.sprite.rect.right+cHero.sprite.rect.left)/2
-				tb.top = cHero.sprite.rect.top-2
+				tb = util.load_sprite("armes/rock.png")
+				tb.rect.left = (cHero.sprite.rect.right+cHero.sprite.rect.left)/2
+				tb.rect.top = cHero.sprite.rect.top-2
 				bullet_rects.append(tb)
 			if marche>0:
 				if pas==1:
@@ -102,29 +101,27 @@ def play(screen,varOptions):
 # Blit des projectiles -----------------------------------------------------------------------
 		bullet_vdb = 0
 		for i in bullet_rects:
-			if i.top<35:
+			if i.rect.top<35:
 				bullet_rects.pop(bullet_vdb)
-			if i.top<cBoss.sprite.rect.bottom and i.centerx<cBoss.sprite.rect.right and i.centerx>cBoss.sprite.rect.left:
+			if pygame.sprite.collide_mask(cBoss.sprite,i):
 				cBoss.vieCourante-=cHero.puissance
 				bullet_rects.pop(bullet_vdb)
-			i.top = i.top-10
-			screen.blit(bullet,i)
+			i.rect.top = i.rect.top-10
+			screen.blit(i.image,i.rect)
 			bullet_vdb+=1
 #-------------------------------------------------------------------------------------------
 		screen.blit(cHero.sprite.image,cHero.sprite.rect)
 		screen.blit(cBoss.sprite.image,cBoss.sprite.rect)
 # Blit de la barre de vie du heros ----------------------------------------------------------
 		for i in range(1,((cHero.vieCourante*50)/cHero.viePleine)+1):
-			vie_rect = vie.get_rect()
-			vie_rect.centery = 579
-			vie_rect.left = 296+i*4
-			screen.blit(vie,vie_rect)
+			vie.rect.centery = 579
+			vie.rect.left = 296+i*4
+			screen.blit(vie.image,vie.rect)
 # Blit de la barre de vie du boss -----------------------------------------------------------
 		for i in range(1,((cBoss.vieCourante*125)/cBoss.viePleine)+1):
-			vie_rect = vie.get_rect()
-			vie_rect.centery = 15
-			vie_rect.left = 284+i*4
-			screen.blit(vie,vie_rect)
+			vie.rect.centery = 15
+			vie.rect.left = 284+i*4
+			screen.blit(vie.image,vie.rect)
 #-------------------------------------------------------------------------------------------
 		pygame.display.flip()
 		screen.blit
