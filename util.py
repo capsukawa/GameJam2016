@@ -1,6 +1,7 @@
 import sys
 import pygame
 import os,inspect
+import math
 
 def load_image(name):
 	name = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))+'/images/'+name
@@ -14,6 +15,27 @@ def load_sprite(name):
 	sprite.mask = pygame.mask.from_surface(sprite.image)
 	return sprite
 
+def gameOver(screen):
+	gameOver=1
+	pygame.init()
+	bgGameOver = load_sprite("gameover.png")
+
+	while gameOver==1:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit()
+
+			keys = pygame.key.get_pressed()
+
+			if keys[pygame.K_ESCAPE]:
+				gameOver=0
+
+		screen.blit(bgGameOver.image,bgGameOver.rect)
+		pygame.display.flip()
+		screen.blit
+		pygame.time.wait(10)
+
+
 def upgrades(screen,hero):
 	menuUpgrades=1
 	pygame.init()
@@ -26,63 +48,76 @@ def upgrades(screen,hero):
 	choix = 0
 	timer = 0
 	timer2 = 10
-	selectPos = [180,230,280,330,420,470]
+	selectPos = [225,275,325,375,465,505]
 
-	while menuUpgrades==1:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				sys.exit()
+	if hero.gold < 100:
+		gameOver(screen)
+	else:
+		hero.gold-=100
 
-		timer-=1
-		timer2-=1
+		while menuUpgrades==1:
 
-		keys = pygame.key.get_pressed()
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					sys.exit()
 
-		if keys[pygame.K_ESCAPE]:
-			menuUpgrades=0
+			timer-=1
+			timer2-=1
 
-		if keys[pygame.K_UP]:
-			if timer<=0:
-				timer=10
-				if choix==0:
-					choix=5
-				else:
-					choix-=1
-		if keys[pygame.K_DOWN]:
-			if timer<=0:
-				timer=10
-				if choix==5:
-					choix=0
-				else:
-					choix+=1
-		if keys[pygame.K_SPACE]:
-			if timer2<=0:
-				timer2=10
-				if choix==0:
-					#Ameliorer la vitalite du joueur
-					print("choix")
-				if choix==1:
-					#Ameliorer la puissance du joueur
-					print("choix")
-				if choix==2:
-					#Ameliorer la vitesse de tir du joueur
-					print("choix")
-				if choix==3:
-					#Ameliorer la vitesse de deplacement du joueur
-					print("choix")
-				if choix==4:
-					menuUpgrades=0
-					hero.vieCourante = hero.viePleine
-				if choix==5:
-					menuUpgrades=0
+			keys = pygame.key.get_pressed()
 
-		screen.blit(bgUpgrades.image,bgUpgrades.rect)
-		select.rect.centery = selectPos[choix]
-		screen.blit(select.image,select.rect)
+			if keys[pygame.K_ESCAPE]:
+				menuUpgrades=0
 
-		pygame.display.flip()
-		screen.blit
-		pygame.time.wait(10)
+			if keys[pygame.K_UP]:
+				if timer<=0:
+					timer=10
+					if choix==0:
+						choix=5
+					else:
+						choix-=1
+			if keys[pygame.K_DOWN]:
+				if timer<=0:
+					timer=10
+					if choix==5:
+						choix=0
+					else:
+						choix+=1
+			if keys[pygame.K_SPACE]:
+				if timer2<=0:
+					timer2=10
+					if choix==0:
+						#Ameliorer la vitalite du joueur
+						print("+vitalite, prix : %d" % (math.exp(hero.viePleine)))
+					if choix==1:
+						#Ameliorer la puissance du joueur
+						print("+puissance, prix : %d" % (math.exp(hero.puissance)))
+					if choix==2:
+						#Ameliorer la vitesse de tir du joueur
+						print("+vitesseTir, prix : %d" % (math.exp(hero.vitesseTir)))
+					if choix==3:
+						#Ameliorer la vitesse de deplacement du joueur
+						print("+vitesseDepl, prix : %d" % (math.exp(hero.vitesseDepl)))
+					if choix==4:
+						menuUpgrades=0
+						hero.vieCourante = hero.viePleine
+					if choix==5:
+						menuUpgrades=0
+
+			screen.blit(bgUpgrades.image,bgUpgrades.rect)
+			select.rect.centery = selectPos[choix]
+			screen.blit(select.image,select.rect)
+			# initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
+			myfont = pygame.font.SysFont("monospace", 30)
+			myfont.set_bold(1)
+
+			# render text
+			label = myfont.render(str(hero.gold), 1, (0,0,0))
+			screen.blit(label, (490, 144))
+			pygame.display.flip()
+			screen.blit
+
+			pygame.time.wait(10)
 
 	return hero
 
