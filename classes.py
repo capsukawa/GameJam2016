@@ -26,14 +26,14 @@ bosses.append(boss8)
 bosses.append(boss9)
 
 # Mobs : vie, puissance, vitesse, drop argent, image
-mob1 = [1,1,15,5,"mob/araignee.png"]
-mob2 = [1,1,20,10,"mob/rat.png"] #ok
-mob3 = [2,2,15,30,"mob/fantome.png"]
-mob4 = [4,2,15,40,"mob/squelette.png"]
-mob5 = [10,3,10,75,"mob/troll.png"]
-mob6 = [7,3,17,50,"mob/mage.png"]
-mob7 = [6,5,20,80,"mob/chauvesouris.png"] #ok
-mob8 = [10,10,15,120,"mob/dragon.png"] #ok
+mob1 = [1,1,1,5,"mob/araignee.png"]
+mob2 = [1,1,2,10,"mob/rat.png"] #ok
+mob3 = [2,2,1,30,"mob/fantome.png"]
+mob4 = [4,2,1,40,"mob/squelette.png"]
+mob5 = [10,3,1,75,"mob/troll.png"]
+mob6 = [7,3,1,50,"mob/mage.png"]
+mob7 = [6,5,2,80,"mob/chauvesouris.png"] #ok
+mob8 = [10,10,1,120,"mob/dragon.png"] #ok
 
 mobs = []
 mobs.append(mob1)

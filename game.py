@@ -5,7 +5,8 @@ import util
 import classes
 import random
 
-levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png"]
+levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png","bg-grotte.png"]
+mobSpawnTime = [50,40,30,20,10,5,5,4,3]
 
 def play(screen,varOptions):
 	jeu = 1
@@ -108,7 +109,7 @@ def play(screen,varOptions):
 			tm.sprite.rect.centery = 31+(tm.sprite.rect.height/2)
 			tm.sprite.rect.centerx = random.randint(50,750)
 			mob_rects.append(tm)
-			timerMobSpawn = 50
+			timerMobSpawn = mobSpawnTime[niveauActuel]
 # Gestion une fois mort + Affichage menu etc ---------------------------------------------
 		if keys[pygame.K_y]: # A VIRER DES QUE FINI
 			cHero.vieCourante-=1
@@ -122,6 +123,8 @@ def play(screen,varOptions):
 				timerMenu=50
 				niveauActuel=0
 				cBoss = classes.Enemy(classes.bosses[niveauActuel])
+				for k in mob_rects:
+					mob_rects = []
 # Gestion si boss mort ---------------------------------------------------------------------
 		if cBoss.vieCourante<=0:
 			niveauActuel+=1
@@ -129,6 +132,8 @@ def play(screen,varOptions):
 			bg = util.load_sprite(levelBg[niveauActuel])
 			bg.rect = [0,31]
 			cBoss = classes.Enemy(classes.bosses[niveauActuel])
+			for k in mob_rects:
+				mob_rects = []
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)
@@ -161,9 +166,10 @@ def play(screen,varOptions):
 							mob_rects.pop(mobs_vdb)
 							cHero.gold+=k.argent
 					bullet_vdb+=1
+			mobs_vdb+=1
+		for k in mob_rects:
 			k.sprite.rect = k.sprite.rect.move(0,k.vitesse)
 			screen.blit(k.sprite.image,k.sprite.rect)
-			mobs_vdb+=1
 #-------------------------------------------------------------------------------------------
 		screen.blit(cHero.sprite.image,cHero.sprite.rect)
 		screen.blit(cBoss.sprite.image,cBoss.sprite.rect)
