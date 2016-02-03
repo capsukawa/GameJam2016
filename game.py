@@ -15,7 +15,7 @@ def play(screen,varOptions):
 	bg = util.load_sprite(levelBg[niveauActuel])
 	bg.rect = [0,31]
 # Creation Classes Boss+Hero ------------------------------------------------------------
-	cBoss = classes.Enemy(classes.boss1)
+	cBoss = classes.Enemy(classes.boss6)
 	cHero = classes.Hero()
 # Sprites du heros -------------------------------------------------------------------------
 	heroDeb = util.load_image("hero.png")
