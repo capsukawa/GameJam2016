@@ -3,6 +3,7 @@ import pygame
 import sys
 import util
 import classes
+import random
 
 levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png"]
 
@@ -39,6 +40,9 @@ def play(screen,varOptions):
 
 	timerMenu = 20
 
+	timerMobSpawn = 50
+	mob_rects = []
+
 	vie = util.load_sprite("vie.png")
 # Boucle du jeu ##############################################
 	while jeu==1:
@@ -50,6 +54,7 @@ def play(screen,varOptions):
 		timerPas-=1
 		timerTir-=1
 		timerMenu-=1
+		timerMobSpawn-=1
 # Gestion des touches clavier --------------------------------------------------------------
 		keys = pygame.key.get_pressed()
 
@@ -97,6 +102,13 @@ def play(screen,varOptions):
 					timerPas=20
 			else:
 				 cHero.sprite.image = heroDeb
+# Spawn des mobs ------------------------------------------------------------------------
+		if timerMobSpawn<=0:
+			tm = classes.Enemy(classes.mobs[niveauActuel])
+			tm.sprite.rect.centery = 31+(tm.sprite.rect.height/2)
+			tm.sprite.rect.centerx = random.randint(50,750)
+			mob_rects.append(tm)
+			timerMobSpawn = 50
 # Gestion une fois mort + Affichage menu etc ---------------------------------------------
 		if keys[pygame.K_y]: # A VIRER DES QUE FINI
 			cHero.vieCourante-=1
@@ -108,9 +120,12 @@ def play(screen,varOptions):
 				jeu=0
 			else:
 				timerMenu=50
+				niveauActuel=0
+				cBoss = classes.Enemy(classes.bosses[niveauActuel])
 # Gestion si boss mort ---------------------------------------------------------------------
 		if cBoss.vieCourante<=0:
 			niveauActuel+=1
+			cHero.gold+=cBoss.argent
 			bg = util.load_sprite(levelBg[niveauActuel])
 			bg.rect = [0,31]
 			cBoss = classes.Enemy(classes.bosses[niveauActuel])
@@ -128,6 +143,27 @@ def play(screen,varOptions):
 			i.rect.top = i.rect.top-10
 			screen.blit(i.image,i.rect)
 			bullet_vdb+=1
+# Affichage mobs --------------------------------------------------------------------------
+		mobs_vdb = 0
+		for k in mob_rects:
+			if pygame.sprite.collide_mask(k.sprite,cHero.sprite):
+				mob_rects.pop(mobs_vdb)
+				cHero.vieCourante-=k.puissance
+			elif k.sprite.rect.bottom>536:
+				mob_rects.pop(mobs_vdb)
+			else:
+				bullet_vdb = 0
+				for u in bullet_rects:
+					if pygame.sprite.collide_mask(k.sprite,u):
+						bullet_rects.pop(bullet_vdb)
+						k.vieCourante-=cHero.puissance
+						if k.vieCourante<=0:
+							mob_rects.pop(mobs_vdb)
+							cHero.gold+=k.argent
+					bullet_vdb+=1
+			k.sprite.rect = k.sprite.rect.move(0,k.vitesse)
+			screen.blit(k.sprite.image,k.sprite.rect)
+			mobs_vdb+=1
 #-------------------------------------------------------------------------------------------
 		screen.blit(cHero.sprite.image,cHero.sprite.rect)
 		screen.blit(cBoss.sprite.image,cBoss.sprite.rect)

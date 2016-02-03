@@ -27,7 +27,7 @@ bosses.append(boss9)
 
 # Mobs : vie, puissance, vitesse, drop argent, image
 mob1 = [1,1,15,5,"mob/araignee.png"]
-mob2 = [1,0.5,20,10,"mob/rat.png"] #ok
+mob2 = [1,1,20,10,"mob/rat.png"] #ok
 mob3 = [2,2,15,30,"mob/fantome.png"]
 mob4 = [4,2,15,40,"mob/squelette.png"]
 mob5 = [10,3,10,75,"mob/troll.png"]
@@ -35,14 +35,25 @@ mob6 = [7,3,17,50,"mob/mage.png"]
 mob7 = [6,5,20,80,"mob/chauvesouris.png"] #ok
 mob8 = [10,10,15,120,"mob/dragon.png"] #ok
 
+mobs = []
+mobs.append(mob1)
+mobs.append(mob2)
+mobs.append(mob3)
+mobs.append(mob4)
+mobs.append(mob5)
+mobs.append(mob6)
+mobs.append(mob7)
+mobs.append(mob8)
+
 class Hero():
 	def __init__(self):
 		self.viePleine = 2
 		self.vieCourante = 2
-		self.puissance = 5
+		self.puissance = 1
 		self.vitesseTir = 1
 		self.vitesseDepl = 2
 		self.nbProjectiles = 1
+		self.gold = 0
 		self.sprite = util.load_sprite("hero.png")
 		self.sprite.rect.centerx = 400
 		self.sprite.rect.centery = 500
