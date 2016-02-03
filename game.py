@@ -15,7 +15,7 @@ def play(screen,varOptions):
 	bg = util.load_sprite(levelBg[niveauActuel])
 	bg.rect = [0,31]
 # Creation Classes Boss+Hero ------------------------------------------------------------
-	cBoss = classes.Enemy(classes.boss6)
+	cBoss = classes.Enemy(classes.bosses[niveauActuel])
 	cHero = classes.Hero()
 # Sprites du heros -------------------------------------------------------------------------
 	heroDeb = util.load_image("hero.png")
@@ -108,6 +108,12 @@ def play(screen,varOptions):
 				jeu=0
 			else:
 				timerMenu=50
+# Gestion si boss mort ---------------------------------------------------------------------
+		if cBoss.vieCourante<=0:
+			niveauActuel+=1
+			bg = util.load_sprite(levelBg[niveauActuel])
+			bg.rect = [0,31]
+			cBoss = classes.Enemy(classes.bosses[niveauActuel])
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)
