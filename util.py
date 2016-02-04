@@ -102,14 +102,14 @@ def upgrades(screen,hero):
 
 			if keys[pygame.K_UP]:
 				if timer<=0:
-					timer=10
+					timer=20
 					if choix==0:
 						choix=5
 					else:
 						choix-=1
 			if keys[pygame.K_DOWN]:
 				if timer<=0:
-					timer=10
+					timer=20
 					if choix==5:
 						choix=0
 					else:
