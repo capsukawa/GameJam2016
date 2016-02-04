@@ -86,6 +86,7 @@ def play(screen,varOptions):
 			else:
 				pygame.mixer.music.pause()
 			timerSon=50
+			varOptions[0] = abs(varOptions[0]-1)
 
 		if keys[pygame.K_UP] and cHero.sprite.rect.bottom>350:
 			cHero.sprite.rect = cHero.sprite.rect.move(0,-(cHero.vitesseDepl))
