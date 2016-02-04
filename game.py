@@ -7,7 +7,7 @@ import random
 
 levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png","bg-grotte.png"]
 projectiles = ["projectile_boss/toile.png","projectile_boss/dent.png","projectile_boss/feu.png","projectile_boss/os.png","projectile_boss/massue.png","projectile_boss/feu_blue.png","projectile_boss/sang.png","projectile_boss/feu.png","projectile_boss/feu.png"]
-mobSpawnTime = [60,50,40,30,25,30,10,4,3]
+mobSpawnTime = [60,50,40,30,25,30,10,8,4]
 tabVitesseTir = [0,70,65,60,55,50,45,40,30,25,20]
 
 def play(screen,varOptions):
@@ -193,6 +193,14 @@ def play(screen,varOptions):
 				if timerSp<=0:
 					EnemyBullets_rects.append(classes.Projectile(projectiles[7],(cBoss.sprite.rect.left+105),(cBoss.sprite.rect.top+60),(cBoss.sprite.rect.left+105),600,5))
 					timerSp=300
+			if niveauActuel==7:
+					EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+190),(cBoss.sprite.rect.top+120),(cHero.sprite.rect.centerx),(cHero.sprite.rect.centery),2))
+					timerBossAttack=80
+			if niveauActuel==8:
+					EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+135),(cBoss.sprite.rect.top+120),(cHero.sprite.rect.centerx),(cHero.sprite.rect.centery),2))
+					EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+190),(cBoss.sprite.rect.top+120),(cHero.sprite.rect.centerx),(cHero.sprite.rect.centery),2))
+					EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+250),(cBoss.sprite.rect.top+120),(cHero.sprite.rect.centerx),(cHero.sprite.rect.centery),2))
+					timerBossAttack=80
 
 # Gestion des mouvements boss ----------------------------------------------------------
 		if timerMoveBoss<=0:
@@ -249,7 +257,7 @@ def play(screen,varOptions):
 		for i in EnemyBullets_rects:
 			if i.sprite.rect.bottom>536 or i.sprite.rect.left>800 or i.sprite.rect.right<0:
 				EnemyBullets_rects.pop(ebullet_vdb)
-			if pygame.sprite.collide_mask(cHero.sprite,i.sprite):
+			elif pygame.sprite.collide_mask(cHero.sprite,i.sprite):
 				cHero.vieCourante-=cBoss.puissance
 				EnemyBullets_rects.pop(ebullet_vdb)
 			else:
@@ -306,7 +314,7 @@ def play(screen,varOptions):
 		for i in bullet_rects:
 			if i.rect.top<35:
 				bullet_rects.pop(bullet_vdb)
-			if pygame.sprite.collide_mask(cBoss.sprite,i):
+			elif pygame.sprite.collide_mask(cBoss.sprite,i):
 				cBoss.vieCourante-=cHero.puissance
 				bullet_rects.pop(bullet_vdb)
 			else:
