@@ -6,6 +6,7 @@ import classes
 import random
 
 levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png","bg-grotte.png"]
+projectiles = ["projectile_boss/toile.png","projectile_boss/dent.png","projectile_boss/feu.png","projectile_boss/os.png","projectile_boss/massue.png","projectile_boss/feu_blue.png","projectile_boss/sang.png","projectile_boss/feu.png","projectile_boss/feu.png"]
 mobSpawnTime = [50,40,30,20,10,5,5,4,3]
 
 def play(screen,varOptions):
@@ -43,6 +44,8 @@ def play(screen,varOptions):
 
 	timerMobSpawn = 50
 	mob_rects = []
+
+	timerBossAttack = 50
 	EnemyBullets_rects = []
 
 	vie = util.load_sprite("vie.png")
@@ -57,6 +60,7 @@ def play(screen,varOptions):
 		timerTir-=1
 		timerMenu-=1
 		timerMobSpawn-=1
+		timerBossAttack-=1
 # Gestion des touches clavier --------------------------------------------------------------
 		keys = pygame.key.get_pressed()
 
@@ -124,6 +128,8 @@ def play(screen,varOptions):
 				timerMenu=50
 				niveauActuel=0
 				cBoss = classes.Enemy(classes.bosses[niveauActuel])
+				bg =  util.load_sprite(levelBg[niveauActuel])
+				bg.rect = [0,31]
 				for k in mob_rects:
 					mob_rects = []
 # Gestion si boss mort ---------------------------------------------------------------------
@@ -135,10 +141,46 @@ def play(screen,varOptions):
 			cBoss = classes.Enemy(classes.bosses[niveauActuel])
 			for k in mob_rects:
 				mob_rects = []
+# Gestion des projectiles boss -------------------------------------------------------------
+		if timerBossAttack<=0:
+			EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],230,200,0,0,2))
+			timerBossAttack=100
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)
-# Blit des projectiles -----------------------------------------------------------------------
+# Blit des projectiles boss -----------------------------------------------------------------
+		ebullet_vdb = 0
+		for i in EnemyBullets_rects:
+			if i.sprite.rect.top<35 or i.sprite.rect.left>800 or i.sprite.rect.right<0:
+				EnemyBullets_rects.pop(ebullet_vdb)
+			if pygame.sprite.collide_mask(cHero.sprite,i.sprite):
+				cHero.vieCourante-=cBoss.puissance
+				EnemyBullets_rects.pop(ebullet_vdb)
+			else:
+				bullet_vdb = 0
+				for u in bullet_rects:
+					if pygame.sprite.collide_mask(u,i.sprite):
+						bullet_rects.pop(bullet_vdb)
+						EnemyBullets_rects.pop(ebullet_vdb)
+					bullet_vdb+=1
+				if i.x2==0 and i.y2==0: #Si tir autoguide
+					i.x2 = cHero.sprite.rect.centerx
+					i.y2 = cHero.sprite.rect.centery
+
+				steps_number = max( abs(i.sprite.rect.centerx-i.x2), abs(i.sprite.rect.centery-i.y2) )
+
+				stepx = float(i.x2-i.sprite.rect.centerx)/steps_number
+				stepy = float(i.y2-i.sprite.rect.centery)/steps_number
+
+				i.sprite.rect = i.sprite.rect.move(stepx,stepy)
+
+				if i.x2==cHero.sprite.rect.centerx and i.y2==cHero.sprite.rect.centery:
+					i.x2=0
+					i.y2=0
+				screen.blit(i.sprite.image,i.sprite.rect)
+			ebullet_vdb+=1
+
+# Blit des projectiles joueur ----------------------------------------------------------------
 		bullet_vdb = 0
 		for i in bullet_rects:
 			if i.rect.top<35:
@@ -146,8 +188,9 @@ def play(screen,varOptions):
 			if pygame.sprite.collide_mask(cBoss.sprite,i):
 				cBoss.vieCourante-=cHero.puissance
 				bullet_rects.pop(bullet_vdb)
-			i.rect.top = i.rect.top-10
-			screen.blit(i.image,i.rect)
+			else:
+				i.rect.top = i.rect.top-10
+				screen.blit(i.image,i.rect)
 			bullet_vdb+=1
 # Affichage mobs --------------------------------------------------------------------------
 		mobs_vdb = 0
