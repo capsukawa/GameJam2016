@@ -133,8 +133,8 @@ def upgrades(screen,hero):
 					else:
 						choix+=1
 			if keys[pygame.K_SPACE] and timerAchat<=0:
-				timerAchat=50
 				if timer2<=0:
+					timerAchat=50
 					timer2=10
 					if choix==0:
 						#Ameliorer la vitalite du joueur
@@ -173,6 +173,74 @@ def upgrades(screen,hero):
 			screen.blit(bgUpgrades.image,bgUpgrades.rect)
 			select.rect.centery = selectPos[choix]
 			screen.blit(select.image,select.rect)
+
+			aRes = hero.viePleine-2
+			i=0
+			while aRes>0:
+				if aRes>=3:
+					s = load_sprite("case_full.PNG")
+					s.rect.top = 207
+					s.rect.left = 420+i*14
+					screen.blit(s.image,s.rect)
+					aRes-=3
+					i+=1
+				elif aRes==2:
+					s = load_sprite("case_2tiers.png")
+					s.rect.top = 207
+					s.rect.left = 420+i*14
+					screen.blit(s.image,s.rect)
+					aRes-=2
+					i+=1
+				elif aRes==1:
+					s = load_sprite("case_1tier.png")
+					s.rect.top = 207
+					s.rect.left = 420+i*14
+					screen.blit(s.image,s.rect)
+					aRes-=1
+					i+=1
+			aRes = hero.puissance-2
+			i=0
+			while aRes>0:
+				if aRes>=3:
+					s = load_sprite("case_full.PNG")
+					s.rect.top = 255
+					s.rect.left = 420+i*14
+					screen.blit(s.image,s.rect)
+					aRes-=3
+					i+=1
+				elif aRes==2:
+					s = load_sprite("case_2tiers.png")
+					s.rect.top = 255
+					s.rect.left = 420+i*14
+					screen.blit(s.image,s.rect)
+					aRes-=2
+					i+=1
+				elif aRes==1:
+					s = load_sprite("case_1tier.png")
+					s.rect.top = 255
+					s.rect.left = 420+i*14
+					screen.blit(s.image,s.rect)
+					aRes-=1
+					i+=1
+			aRes = hero.vitesseTir-1
+			i=0
+			while aRes>0:
+				s = load_sprite("case_full.PNG")
+				s.rect.top = 305
+				s.rect.left = 519+i*14
+				screen.blit(s.image,s.rect)
+				aRes-=1
+				i+=1
+
+			aRes = hero.vitesseDepl-1
+			i=0
+			while aRes>0:
+				s = load_sprite("case_full.PNG")
+				s.rect.top = 355
+				s.rect.left = 519+i*14
+				screen.blit(s.image,s.rect)
+				aRes-=1
+				i+=1
 
 			# render text
 			label = myfont.render(str(hero.gold), 1, (0,0,0))

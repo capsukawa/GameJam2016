@@ -50,8 +50,8 @@ class Hero():
 	def __init__(self):
 		self.viePleine = 2
 		self.vieCourante = 2
-		self.puissance = 50
-		self.vitesseTir = 10
+		self.puissance = 2
+		self.vitesseTir = 1
 		self.vitesseDepl = 1
 		self.nbProjectiles = 1
 		self.gold = 0
