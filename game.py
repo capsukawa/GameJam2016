@@ -7,7 +7,7 @@ import random
 
 levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png","bg-grotte.png"]
 projectiles = ["projectile_boss/toile.png","projectile_boss/dent.png","projectile_boss/feu.png","projectile_boss/os.png","projectile_boss/massue.png","projectile_boss/feu_blue.png","projectile_boss/sang.png","projectile_boss/feu.png","projectile_boss/feu.png"]
-mobSpawnTime = [50,40,30,20,10,5,5,4,3]
+mobSpawnTime = [60,50,40,30,20,10,5,4,3]
 tabVitesseTir = [0,70,65,60,55,50,45,40,30,25,20]
 
 def play(screen,varOptions):
