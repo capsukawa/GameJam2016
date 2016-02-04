@@ -7,7 +7,7 @@ import random
 
 levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png","bg-grotte.png"]
 projectiles = ["projectile_boss/toile.png","projectile_boss/dent.png","projectile_boss/feu.png","projectile_boss/os.png","projectile_boss/massue.png","projectile_boss/feu_blue.png","projectile_boss/sang.png","projectile_boss/feu.png","projectile_boss/feu.png"]
-mobSpawnTime = [60,50,40,30,20,10,5,4,3]
+mobSpawnTime = [60,50,40,30,25,20,5,4,3]
 tabVitesseTir = [0,70,65,60,55,50,45,40,30,25,20]
 
 def play(screen,varOptions):
@@ -184,6 +184,9 @@ def play(screen,varOptions):
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+120),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+120),600,3))
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+150),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+150),600,3))
 				timerBossAttack=200
+			if niveauActuel==5:
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+50),(cBoss.sprite.rect.top+80),(cBoss.sprite.rect.left+50),600,2))
+				timerBossAttack=100
 # Gestion des mouvements boss ----------------------------------------------------------
 		if timerMoveBoss<=0:
 			if niveauActuel==0:
@@ -203,6 +206,7 @@ def play(screen,varOptions):
 					cBoss.sprite.rect = cBoss.sprite.rect.move(cBoss.vitesse,0)
 				elif (cBoss.sprite.rect.centerx>cHero.sprite.rect.centerx):
 					cBoss.sprite.rect = cBoss.sprite.rect.move(-cBoss.vitesse,0)
+				timerMoveBoss=3
 			if niveauActuel==3:
 				if (cBoss.sprite.rect.centerx<cHero.sprite.rect.centerx) and cBoss.sprite.rect.left>0:
 					cBoss.sprite.rect = cBoss.sprite.rect.move(-cBoss.vitesse,0)
