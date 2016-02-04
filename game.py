@@ -176,6 +176,9 @@ def play(screen,varOptions):
 					i.x2 = cHero.sprite.rect.centerx
 					i.y2 = cHero.sprite.rect.centery
 
+				# i.sprite.rect.centerx et i.sprite.rect.centery = coordonnees point de depart
+				# i.x2 et i.y2 = coordonnes point d arrivee
+
 				steps_number = max( abs(i.sprite.rect.centerx-i.x2), abs(i.sprite.rect.centery-i.y2) )
 
 				stepx = float(i.x2-i.sprite.rect.centerx)/steps_number
