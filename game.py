@@ -177,10 +177,11 @@ def play(screen,varOptions):
 			if niveauActuel==3:
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+70),(cBoss.sprite.rect.top+80),(cBoss.sprite.rect.left+70),600,2))
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+120),(cBoss.sprite.rect.top+80),(cBoss.sprite.rect.left+120),600,2))
-				timerBossAttack=25
-
-
-
+				timerBossAttack=40
+			if niveauActuel==4:
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+65),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+65),600,2))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+145),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+145),600,2))
+				timerBossAttack=50
 # Gestion des mouvements boss ----------------------------------------------------------
 		if timerMoveBoss<=0:
 			if niveauActuel==0:
