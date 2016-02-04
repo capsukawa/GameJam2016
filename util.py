@@ -60,6 +60,7 @@ def upgrades(screen,hero):
 		choix = 0
 		timer = 0
 		timer2 = 10
+		timerAchat = 200
 		selectPos = [225,275,325,375,465,505]
 		hero.gold-=100
 
@@ -92,6 +93,7 @@ def upgrades(screen,hero):
 
 			timer-=1
 			timer2-=1
+			timerAchat-=1
 
 			keys = pygame.key.get_pressed()
 
@@ -112,7 +114,8 @@ def upgrades(screen,hero):
 						choix=0
 					else:
 						choix+=1
-			if keys[pygame.K_SPACE]:
+			if keys[pygame.K_SPACE] and timerAchat<=0:
+				timerAchat=50
 				if timer2<=0:
 					timer2=10
 					if choix==0:

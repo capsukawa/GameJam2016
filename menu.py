@@ -18,7 +18,7 @@ select.rect.right = 520
 select.rect.centery = menuPos[0]
 
 pygame.mixer.music.load("menutheme.mp3")
-pygame.mixer.music.play(10)
+pygame.mixer.music.play(1000)
 
 choix = 0
 timer = 0

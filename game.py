@@ -144,15 +144,17 @@ def play(screen,varOptions):
 			EnemyBullets_rects = []
 # Gestion des projectiles boss -------------------------------------------------------------
 		if timerBossAttack<=0:
-			EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],230,200,0,0,2))
-			timerBossAttack=100
+			if niveauActuel==0:
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+230),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+130),600,1))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+250),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+350),600,1))
+				timerBossAttack=200
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)
 # Blit des projectiles boss -----------------------------------------------------------------
 		ebullet_vdb = 0
 		for i in EnemyBullets_rects:
-			if i.sprite.rect.top<35 or i.sprite.rect.left>800 or i.sprite.rect.right<0:
+			if i.sprite.rect.bottom>536 or i.sprite.rect.left>800 or i.sprite.rect.right<0:
 				EnemyBullets_rects.pop(ebullet_vdb)
 			if pygame.sprite.collide_mask(cHero.sprite,i.sprite):
 				cHero.vieCourante-=cBoss.puissance
