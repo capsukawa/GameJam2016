@@ -5,7 +5,7 @@ import util
 import classes
 import random
 
-levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png","bg-grotte.png"]
+levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png"]
 projectiles = ["projectile_boss/toile.png","projectile_boss/dent.png","projectile_boss/feu.png","projectile_boss/os.png","projectile_boss/massue.png","projectile_boss/feu_blue.png","projectile_boss/sang.png","projectile_boss/feu.png","projectile_boss/feu.png"]
 mobSpawnTime = [60,50,40,30,20,10,5,4,3]
 tabVitesseTir = [0,70,65,60,55,50,45,40,30,25,20]
@@ -134,12 +134,18 @@ def play(screen,varOptions):
 # Gestion si boss mort ---------------------------------------------------------------------
 		if cBoss.vieCourante<=0:
 			niveauActuel+=1
-			cHero.gold+=cBoss.argent
-			bg = util.load_sprite(levelBg[niveauActuel])
-			bg.rect = [0,31]
-			cBoss = classes.Enemy(classes.bosses[niveauActuel])
-			mob_rects = []
-			EnemyBullets_rects = []
+			# si le jeu est fini
+			if(niveauActuel==8):
+				jeu=0
+				util.win(screen)
+			else:
+				print niveauActuel
+				cHero.gold+=cBoss.argent
+				bg = util.load_sprite(levelBg[niveauActuel])
+				bg.rect = [0,31]
+				cBoss = classes.Enemy(classes.bosses[niveauActuel])
+				mob_rects = []
+				EnemyBullets_rects = []
 # Gestion des projectiles boss -------------------------------------------------------------
 		if timerBossAttack<=0:
 			if niveauActuel==0:
