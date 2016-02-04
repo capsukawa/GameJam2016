@@ -179,9 +179,11 @@ def play(screen,varOptions):
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+120),(cBoss.sprite.rect.top+80),(cBoss.sprite.rect.left+120),600,2))
 				timerBossAttack=40
 			if niveauActuel==4:
-				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+65),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+65),600,2))
-				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+145),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+145),600,2))
-				timerBossAttack=50
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+60),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+60),600,3))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+90),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+90),600,3))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+120),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+120),600,3))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+150),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+150),600,3))
+				timerBossAttack=200
 # Gestion des mouvements boss ----------------------------------------------------------
 		if timerMoveBoss<=0:
 			if niveauActuel==0:
@@ -211,6 +213,11 @@ def play(screen,varOptions):
 						cBoss.sprite.rect.top = 34
 						cBoss.sprite.rect.centerx = 400
 						timerSp = 1000
+			if niveauActuel==4:
+				if timerSp<=0:
+					EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+60),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left-200),600,2))
+					EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+150),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+410),600,2))
+					timerSp=500
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)
