@@ -170,6 +170,16 @@ def play(screen,varOptions):
 			if niveauActuel==1:
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+185),(cBoss.sprite.rect.top+190),(cHero.sprite.rect.centerx),600,1))
 				timerBossAttack=100
+			if niveauActuel==2:
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+105),(cBoss.sprite.rect.top+230),(cBoss.sprite.rect.left+145),600,2))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+180),(cBoss.sprite.rect.top+230),(cBoss.sprite.rect.left+220),600,2))
+				timerBossAttack=100
+			if niveauActuel==3:
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+70),(cBoss.sprite.rect.top+80),(cBoss.sprite.rect.left+70),600,2))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+120),(cBoss.sprite.rect.top+80),(cBoss.sprite.rect.left+120),600,2))
+				timerBossAttack=25
+
+
 
 # Gestion des mouvements boss ----------------------------------------------------------
 		if timerMoveBoss<=0:
@@ -185,11 +195,21 @@ def play(screen,varOptions):
 						EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+250),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+250),600,1.5))
 						timerSp=15
 				timerMoveBoss=5
-			if niveauActuel==1:
+			if niveauActuel==1 or niveauActuel==2:
 				if (cBoss.sprite.rect.centerx<cHero.sprite.rect.centerx):
 					cBoss.sprite.rect = cBoss.sprite.rect.move(cBoss.vitesse,0)
 				elif (cBoss.sprite.rect.centerx>cHero.sprite.rect.centerx):
 					cBoss.sprite.rect = cBoss.sprite.rect.move(-cBoss.vitesse,0)
+			if niveauActuel==3:
+				if (cBoss.sprite.rect.centerx<cHero.sprite.rect.centerx) and cBoss.sprite.rect.left>0:
+					cBoss.sprite.rect = cBoss.sprite.rect.move(-cBoss.vitesse,0)
+				elif (cBoss.sprite.rect.centerx>cHero.sprite.rect.centerx) and cBoss.sprite.rect.right<800:
+					cBoss.sprite.rect = cBoss.sprite.rect.move(cBoss.vitesse,0)
+				else:
+					if timerSp<=0:
+						cBoss.sprite.rect.top = 34
+						cBoss.sprite.rect.centerx = 400
+						timerSp = 1000
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)

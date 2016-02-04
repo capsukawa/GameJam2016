@@ -7,7 +7,7 @@ import util
 boss1 = [50,1,1,100,"boss/araignee.png"] #ok
 boss2 = [100,1,1,150,"boss/rat.png"] #ok
 boss3 = [150,2,2,300,"boss/fantome.png"]
-boss4 = [300,2,0,400,"boss/squelette.png"]
+boss4 = [300,2,1,400,"boss/squelette.png"]
 boss5 = [1000,4,0,600,"boss/troll.png"]
 boss6 = [700,5,0,700,"boss/mage.png"] #ok
 boss7 = [1000,10,0,800,"boss/vampire.png"]
@@ -50,7 +50,7 @@ class Hero():
 	def __init__(self):
 		self.viePleine = 2
 		self.vieCourante = 2
-		self.puissance = 2
+		self.puissance = 20
 		self.vitesseTir = 1
 		self.vitesseDepl = 1
 		self.nbProjectiles = 1

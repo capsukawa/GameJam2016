@@ -78,7 +78,7 @@ def upgrades(screen,hero):
 		choix = 0
 		timer = 0
 		timer2 = 10
-		timerAchat = 200
+		timerAchat = 50
 		selectPos = [225,275,325,375,465,505]
 		hero.gold-=100
 
