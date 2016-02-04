@@ -15,7 +15,7 @@ def play(screen,varOptions):
 	pygame.init()
 # Background + Zone ---------------------------------------------------------------------
 	background = util.load_sprite("background.png")
-	niveauActuel = 6
+	niveauActuel = 0
 	bg = util.load_sprite(levelBg[niveauActuel])
 	bg.rect = [0,31]
 
@@ -52,6 +52,7 @@ def play(screen,varOptions):
 	timerBossAttack = 50
 	timerMoveBoss = 50
 	timerSp = 50
+	sensDir = 1
 	EnemyBullets_rects = []
 
 	vie = util.load_sprite("vie.png")
@@ -69,6 +70,7 @@ def play(screen,varOptions):
 		timerBossAttack-=1
 		timerMoveBoss-=1
 		timerSp-=1
+		timerSon-=1
 # Set de la valeur de l'argent du personnage -----------------------------------------------
 		label = myfont.render(str(cHero.gold), 1, (255,185,0))
 # Gestion des touches clavier --------------------------------------------------------------
@@ -76,6 +78,13 @@ def play(screen,varOptions):
 
 		if keys[pygame.K_ESCAPE] and timerMenu<=0:
 			jeu=0
+
+		if keys[pygame.K_m] and timerSon<=0:
+			if varOptions[0]==0:
+				pygame.mixer.music.unpause()
+			else:
+				pygame.mixer.music.pause()
+			timerSon=50
 
 		if keys[pygame.K_UP] and cHero.sprite.rect.bottom>350:
 			cHero.sprite.rect = cHero.sprite.rect.move(0,-(cHero.vitesseDepl))
@@ -254,6 +263,16 @@ def play(screen,varOptions):
 				elif (cBoss.sprite.rect.centerx>cHero.sprite.rect.centerx):
 					cBoss.sprite.rect = cBoss.sprite.rect.move(-cBoss.vitesse,0)
 				timerMoveBoss=2
+			if niveauActuel==7 or niveauActuel==8:
+				if sensDir==1:
+					cBoss.sprite.rect = cBoss.sprite.rect.move(cBoss.vitesse,0)
+					if cBoss.sprite.rect.right>800:
+						sensDir=0
+				else:
+					cBoss.sprite.rect = cBoss.sprite.rect.move(-cBoss.vitesse,0)
+					if cBoss.sprite.rect.left<0:
+						sensDir=1
+				timerMoveBoss = 5
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)

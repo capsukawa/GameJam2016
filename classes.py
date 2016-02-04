@@ -11,8 +11,8 @@ boss4 = [300,2,1,400,"boss/squelette.png"]
 boss5 = [1000,4,0,600,"boss/troll.png"]
 boss6 = [700,5,0,700,"boss/mage.png"] #ok
 boss7 = [1000,10,3,800,"boss/vampire.png"]
-boss8 = [1500,15,0,900,"boss/dragon1.png"] #ok
-boss9 = [3000,20,0,1000,"boss/dragon3.png"] #ok
+boss8 = [1500,15,2,900,"boss/dragon1.png"] #ok
+boss9 = [3000,20,4,1000,"boss/dragon3.png"] #ok
 
 bosses = []
 bosses.append(boss1)
