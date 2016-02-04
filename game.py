@@ -43,6 +43,7 @@ def play(screen,varOptions):
 
 	timerMobSpawn = 50
 	mob_rects = []
+	EnemyBullets_rects = []
 
 	vie = util.load_sprite("vie.png")
 # Boucle du jeu ##############################################
