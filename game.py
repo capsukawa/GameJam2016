@@ -46,6 +46,7 @@ def play(screen,varOptions):
 
 	timerMenu = 20
 	timerSon = 50
+	timerPause = 50
 
 	timerMobSpawn = 50
 	mob_rects = []
@@ -72,6 +73,7 @@ def play(screen,varOptions):
 		timerMoveBoss-=1
 		timerSp-=1
 		timerSon-=1
+		timerPause-=1
 # Set de la valeur de l'argent du personnage -----------------------------------------------
 		label = myfont.render(str(cHero.gold), 1, (255,185,0))
 # Gestion des touches clavier --------------------------------------------------------------
@@ -87,6 +89,21 @@ def play(screen,varOptions):
 				pygame.mixer.music.pause()
 			timerSon=50
 			varOptions[0] = abs(varOptions[0]-1)
+
+		if keys[pygame.K_p] and timerPause<=0:
+			pause=1
+			timerPause = 30
+			pygame.time.wait(100)
+			while pause==1:
+				for event in pygame.event.get():
+					if event.type == pygame.QUIT:
+						sys.exit()
+				keys = pygame.key.get_pressed()
+				timerPause-=1
+				if keys[pygame.K_p] and timerPause<=0:
+					pause=0
+					timerPause = 30
+				pygame.time.wait(10)
 
 		if keys[pygame.K_UP] and cHero.sprite.rect.bottom>350:
 			cHero.sprite.rect = cHero.sprite.rect.move(0,-(cHero.vitesseDepl))
