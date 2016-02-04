@@ -233,7 +233,7 @@ def upgrades(screen,hero):
 			while aRes>0:
 				s = load_sprite("case_full.PNG")
 				s.rect.top = 355
-				s.rect.left = 519+i*14
+				s.rect.left = 589+i*14
 				screen.blit(s.image,s.rect)
 				aRes-=1
 				i+=1
