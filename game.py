@@ -117,10 +117,6 @@ def play(screen,varOptions):
 			mob_rects.append(tm)
 			timerMobSpawn = mobSpawnTime[niveauActuel]
 # Gestion une fois mort + Affichage menu etc ---------------------------------------------
-		if keys[pygame.K_y]: # A VIRER DES QUE FINI
-			cHero.vieCourante-=1
-
-
 		if cHero.vieCourante<=0:
 			cHero = util.upgrades(screen,cHero)
 			if cHero.vieCourante<=0:
