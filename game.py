@@ -45,6 +45,7 @@ def play(screen,varOptions):
 	bullet_rects = []
 
 	timerMenu = 20
+	timerSon = 50
 
 	timerMobSpawn = 50
 	mob_rects = []
