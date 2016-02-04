@@ -52,7 +52,7 @@ class Hero():
 		self.vieCourante = 2
 		self.puissance = 1
 		self.vitesseTir = 1
-		self.vitesseDepl = 2
+		self.vitesseDepl = 1
 		self.nbProjectiles = 1
 		self.gold = 0
 		self.sprite = util.load_sprite("hero.png")
