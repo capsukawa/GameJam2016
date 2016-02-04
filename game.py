@@ -18,6 +18,9 @@ def play(screen,varOptions):
 	niveauActuel = 0
 	bg = util.load_sprite(levelBg[niveauActuel])
 	bg.rect = [0,31]
+
+	myfont = pygame.font.SysFont("monospace", 30)
+	myfont.set_bold(1)
 # Creation Classes Boss+Hero ------------------------------------------------------------
 	cBoss = classes.Enemy(classes.bosses[niveauActuel])
 	cHero = classes.Hero()
@@ -66,6 +69,8 @@ def play(screen,varOptions):
 		timerBossAttack-=1
 		timerMoveBoss-=1
 		timerSp-=1
+# Set de la valeur de l'argent du personnage -----------------------------------------------
+		label = myfont.render(str(cHero.gold), 1, (255,185,0))
 # Gestion des touches clavier --------------------------------------------------------------
 		keys = pygame.key.get_pressed()
 
@@ -316,7 +321,10 @@ def play(screen,varOptions):
 				bullet_rects.pop(bullet_vdb)
 			elif pygame.sprite.collide_mask(cBoss.sprite,i):
 				cBoss.vieCourante-=cHero.puissance
-				bullet_rects.pop(bullet_vdb)
+				try:
+					bullet_rects.pop(bullet_vdb)
+				except IndexError:
+					print("nope")
 			else:
 				i.rect.top = i.rect.top-10
 				screen.blit(i.image,i.rect)
@@ -357,7 +365,10 @@ def play(screen,varOptions):
 			vie.rect.left = 284+i*4
 			screen.blit(vie.image,vie.rect)
 #-------------------------------------------------------------------------------------------
+		screen.blit(label, (565, 551))
+
 		pygame.display.flip()
 		screen.blit
+
 		pygame.time.wait(10)
 ########################################################
