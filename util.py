@@ -73,11 +73,10 @@ def upgrades(screen,hero):
 		tabPrixVital = [0,0,42,80,120,200,235,285,400,470,550,635,720,800,880,965,1050,1130,1215,1300,1380,1460,1540,1620,1700,1780,1860,1940,2020,2100,2180,2260,2340,2420,2500,2580,2660,2740,2820,2900,2980,3060,3140,3220,3300,3380,3460,3540,3620,3700,3780]
 		tabPrixPuiss = [0,69,80,120,200,235,285,400,470,550,635,720,800,880,965,1050,1130,1215,1300,1380,1460,1540,1620,1700,1780,1860,1940,2020,2100,2180,2260,2340,2420,2500,2580,2660,2740,2820,2900,2980,3060,3140,3220,3300,3380,3460,3540,3620,3700,3780]
 		tabPrixVitTir = [0,80,150,190,260,320,490,580,690,800]
-		tabPrixVitDep = [0,80,150,190,260,320,490,580,690,800]
+		tabPrixVitDep = [0,80,190,320,500]
 
 		choix = 0
 		timer = 0
-		timer2 = 10
 		timerAchat = 50
 		selectPos = [225,275,325,375,465,505]
 		hero.gold-=100
@@ -110,7 +109,6 @@ def upgrades(screen,hero):
 					sys.exit()
 
 			timer-=1
-			timer2-=1
 			timerAchat-=1
 
 			keys = pygame.key.get_pressed()
@@ -133,9 +131,7 @@ def upgrades(screen,hero):
 					else:
 						choix+=1
 			if keys[pygame.K_SPACE] and timerAchat<=0:
-				if timer2<=0:
-					timerAchat=50
-					timer2=10
+					timerAchat=30
 					if choix==0:
 						#Ameliorer la vitalite du joueur
 						if(hero.viePleine < 50 and hero.gold >= tabPrixVital[hero.viePleine]):
@@ -159,7 +155,7 @@ def upgrades(screen,hero):
 							print("achat impossible")
 					if choix==3:
 						#Ameliorer la vitesse de deplacement du joueur
-						if(hero.vitesseDepl < 10 and hero.gold >= tabPrixVitDep[hero.vitesseDepl]):
+						if(hero.vitesseDepl < 5 and hero.gold >= tabPrixVitDep[hero.vitesseDepl]):
 							hero.gold-=tabPrixVitDep[hero.vitesseDepl]
 							hero.vitesseDepl+=1
 						else:
@@ -237,7 +233,7 @@ def upgrades(screen,hero):
 			while aRes>0:
 				s = load_sprite("case_full.PNG")
 				s.rect.top = 355
-				s.rect.left = 519+i*14
+				s.rect.left = 589+i*14
 				screen.blit(s.image,s.rect)
 				aRes-=1
 				i+=1

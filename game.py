@@ -7,7 +7,7 @@ import random
 
 levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png","bg-grotte.png"]
 projectiles = ["projectile_boss/toile.png","projectile_boss/dent.png","projectile_boss/feu.png","projectile_boss/os.png","projectile_boss/massue.png","projectile_boss/feu_blue.png","projectile_boss/sang.png","projectile_boss/feu.png","projectile_boss/feu.png"]
-mobSpawnTime = [60,50,40,30,25,20,5,4,3]
+mobSpawnTime = [60,50,40,30,25,30,10,4,3]
 tabVitesseTir = [0,70,65,60,55,50,45,40,30,25,20]
 
 def play(screen,varOptions):
@@ -190,8 +190,15 @@ def play(screen,varOptions):
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+150),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+150),600,3))
 				timerBossAttack=200
 			if niveauActuel==5:
-				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+50),(cBoss.sprite.rect.top+80),(cBoss.sprite.rect.left+50),600,2))
-				timerBossAttack=100
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+50),(cBoss.sprite.rect.top+80),(cBoss.sprite.rect.left+50),600,4))
+				timerBossAttack=50
+			if niveauActuel==6:
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+95),(cBoss.sprite.rect.top+60),(cBoss.sprite.rect.left+95),600,1))
+				timerBossAttack=40
+				if timerSp<=0:
+					EnemyBullets_rects.append(classes.Projectile(projectiles[7],(cBoss.sprite.rect.left+105),(cBoss.sprite.rect.top+60),(cBoss.sprite.rect.left+105),600,5))
+					timerSp=300
+
 # Gestion des mouvements boss ----------------------------------------------------------
 		if timerMoveBoss<=0:
 			if niveauActuel==0:
@@ -227,6 +234,17 @@ def play(screen,varOptions):
 					EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+60),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left-200),600,2))
 					EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+150),(cBoss.sprite.rect.top+145),(cBoss.sprite.rect.left+410),600,2))
 					timerSp=500
+			if niveauActuel==5:
+				if timerSp<=0:
+					for i in range(1,25):
+						EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],10+i*30,35,10+i*30,600,1))
+						timerSp = 400
+			if niveauActuel==6:
+				if (cBoss.sprite.rect.centerx<cHero.sprite.rect.centerx):
+					cBoss.sprite.rect = cBoss.sprite.rect.move(cBoss.vitesse,0)
+				elif (cBoss.sprite.rect.centerx>cHero.sprite.rect.centerx):
+					cBoss.sprite.rect = cBoss.sprite.rect.move(-cBoss.vitesse,0)
+				timerMoveBoss=2
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)
