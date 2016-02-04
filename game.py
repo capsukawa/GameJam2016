@@ -48,6 +48,7 @@ def play(screen,varOptions):
 
 	timerBossAttack = 50
 	timerMoveBoss = 50
+	timerSp = 50
 	EnemyBullets_rects = []
 
 	vie = util.load_sprite("vie.png")
@@ -64,6 +65,7 @@ def play(screen,varOptions):
 		timerMobSpawn-=1
 		timerBossAttack-=1
 		timerMoveBoss-=1
+		timerSp-=1
 # Gestion des touches clavier --------------------------------------------------------------
 		keys = pygame.key.get_pressed()
 
@@ -162,22 +164,38 @@ def play(screen,varOptions):
 # Gestion des projectiles boss -------------------------------------------------------------
 		if timerBossAttack<=0:
 			if niveauActuel==0:
-				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+230),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+130),600,1))
-				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+250),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+350),600,1))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+230),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+80),600,1))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+250),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+400),600,1))
 				timerBossAttack=200
+			if niveauActuel==1:
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+185),(cBoss.sprite.rect.top+190),(cHero.sprite.rect.centerx),600,1))
+				timerBossAttack=100
+
 # Gestion des mouvements boss ----------------------------------------------------------
 		if timerMoveBoss<=0:
 			if niveauActuel==0:
 				if (cBoss.sprite.rect.centerx<cHero.sprite.rect.centerx):
-					cBoss.sprite.rect = cBoss.sprite.rect.move(1,0)
+					cBoss.sprite.rect = cBoss.sprite.rect.move(cBoss.vitesse,0)
 				elif (cBoss.sprite.rect.centerx>cHero.sprite.rect.centerx):
-					cBoss.sprite.rect = cBoss.sprite.rect.move(-1,0)
+					cBoss.sprite.rect = cBoss.sprite.rect.move(-cBoss.vitesse,0)
+				else:
+					# Attaque speciale
+					if timerSp<=0:
+						EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+230),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+230),600,1.5))
+						EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+250),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+250),600,1.5))
+						timerSp=15
 				timerMoveBoss=5
+			if niveauActuel==1:
+				if (cBoss.sprite.rect.centerx<cHero.sprite.rect.centerx):
+					cBoss.sprite.rect = cBoss.sprite.rect.move(cBoss.vitesse,0)
+				elif (cBoss.sprite.rect.centerx>cHero.sprite.rect.centerx):
+					cBoss.sprite.rect = cBoss.sprite.rect.move(-cBoss.vitesse,0)
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)
 # Blit des projectiles boss -----------------------------------------------------------------
 		ebullet_vdb = 0
+		auto = 0
 		for i in EnemyBullets_rects:
 			if i.sprite.rect.bottom>536 or i.sprite.rect.left>800 or i.sprite.rect.right<0:
 				EnemyBullets_rects.pop(ebullet_vdb)
@@ -194,6 +212,7 @@ def play(screen,varOptions):
 				if i.x2==0 and i.y2==0: #Si tir autoguide
 					i.x2 = cHero.sprite.rect.centerx
 					i.y2 = cHero.sprite.rect.centery
+					auto = 1
 
 				# i.sprite.rect.centerx et i.sprite.rect.centery = coordonnees point de depart
 				# i.x2 et i.y2 = coordonnes point d arrivee
@@ -224,9 +243,10 @@ def play(screen,varOptions):
 						i.sprite.rect=i.sprite.rect.move(-i.vitesse,0)
 
 
-				if i.x2==cHero.sprite.rect.centerx and i.y2==cHero.sprite.rect.centery:
+				if auto==1:
 					i.x2=0
 					i.y2=0
+					auto=0
 
 				screen.blit(i.sprite.image,i.sprite.rect)
 			ebullet_vdb+=1

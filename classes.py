@@ -4,9 +4,9 @@ import os
 import util
 
 #boss : vie, puissance, vitesse, drop d'argent, image
-boss1 = [50,1,0,100,"boss/araignee.png"] #ok
-boss2 = [100,1,0,150,"boss/rat.png"] #ok
-boss3 = [150,2,0,300,"boss/fantome.png"]
+boss1 = [50,1,1,100,"boss/araignee.png"] #ok
+boss2 = [100,1,1,150,"boss/rat.png"] #ok
+boss3 = [150,2,2,300,"boss/fantome.png"]
 boss4 = [300,2,0,400,"boss/squelette.png"]
 boss5 = [1000,4,0,600,"boss/troll.png"]
 boss6 = [700,5,0,700,"boss/mage.png"] #ok
