@@ -10,7 +10,7 @@ boss3 = [150,2,2,300,"boss/fantome.png"]
 boss4 = [300,2,1,400,"boss/squelette.png"]
 boss5 = [1000,4,0,600,"boss/troll.png"]
 boss6 = [700,5,0,700,"boss/mage.png"] #ok
-boss7 = [1000,10,0,800,"boss/vampire.png"]
+boss7 = [1000,10,3,800,"boss/vampire.png"]
 boss8 = [1500,15,0,900,"boss/dragon1.png"] #ok
 boss9 = [2000,20,0,1000,"boss/dragon3.png"] #ok
 
@@ -32,7 +32,7 @@ mob3 = [2,2,1,30,"mob/fantome.png"]
 mob4 = [4,2,1,40,"mob/squelette.png"]
 mob5 = [10,3,1,75,"mob/troll.png"]
 mob6 = [7,3,1,50,"mob/mage.png"]
-mob7 = [6,5,2,80,"mob/chauvesouris.png"]
+mob7 = [6,4,2,80,"mob/chauvesouris.png"]
 mob8 = [10,10,1,120,"mob/dragon.png"]
 
 mobs = []
