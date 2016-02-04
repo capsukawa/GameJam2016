@@ -39,23 +39,52 @@ def gameOver(screen):
 def upgrades(screen,hero):
 	menuUpgrades=1
 	pygame.init()
-	bgUpgrades = load_sprite("upgrades.png")
-
-	select = load_sprite("select.png")
-	select.rect.right = 125
-	select.rect.centery = 170
-
-	choix = 0
-	timer = 0
-	timer2 = 10
-	selectPos = [225,275,325,375,465,505]
-
 	if hero.gold < 100:
 		gameOver(screen)
 	else:
+		bgUpgrades = load_sprite("upgrades.png")
+
+		select = load_sprite("select.png")
+		select.rect.right = 125
+		select.rect.centery = 170
+
+		# initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
+		myfont = pygame.font.SysFont("monospace", 30)
+		myfont.set_bold(1)
+
+		tabPrixVital = [0,42,80,120,200,235,285,400,470,550,635,720,800,880,965,1050,1130,1215,1300,1380,1460,1540,1620,1700,1780,1860,1940,2020,2100,2180,2260,2340,2420,2500,2580,2660,2740,2820,2900,2980,3060,3140,3220,3300,3380,3460,3540,3620,3700,3780]
+		tabPrixPuiss = [0,69,80,120,200,235,285,400,470,550,635,720,800,880,965,1050,1130,1215,1300,1380,1460,1540,1620,1700,1780,1860,1940,2020,2100,2180,2260,2340,2420,2500,2580,2660,2740,2820,2900,2980,3060,3140,3220,3300,3380,3460,3540,3620,3700,3780]
+		tabPrixVitTir = [0,100,100,100,100,100,100,100,100,100]
+		tabPrixVitDep = [0,100,100,100,100,100,100,100,100,100]
+
+		choix = 0
+		timer = 0
+		timer2 = 10
+		selectPos = [225,275,325,375,465,505]
 		hero.gold-=100
 
+
 		while menuUpgrades==1:
+
+			if (hero.viePleine < 50):
+				prixVital = myfont.render(str(tabPrixVital[hero.viePleine]), 1, (0,0,0))
+			else:
+				prixVital = myfont.render("-", 1, (0,0,0))
+
+			if(hero.puissance < 50):
+				prixPuiss = myfont.render(str(tabPrixPuiss[hero.puissance]), 1, (0,0,0))
+			else:
+				prixPuiss = myfont.render("-", 1, (0,0,0))
+
+			if(hero.vitesseTir < 10):
+				prixVitTir = myfont.render(str(tabPrixVitTir[hero.vitesseTir]), 1, (0,0,0))
+			else:
+				prixVitTir = myfont.render("-", 1, (0,0,0))
+
+			if(hero.vitesseDepl < 10):
+				prixVitesse = myfont.render(str(tabPrixVitDep[hero.vitesseDepl]), 1, (0,0,0))
+			else:
+				prixVitesse = myfont.render("-", 1, (0,0,0))
 
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -88,16 +117,32 @@ def upgrades(screen,hero):
 					timer2=10
 					if choix==0:
 						#Ameliorer la vitalite du joueur
-						print("+vitalite, prix : %d" % (math.exp(hero.viePleine)))
+						if(hero.viePleine < 50 and hero.gold >= tabPrixVital[hero.viePleine]):
+							hero.gold-=tabPrixVital[hero.viePleine]
+							hero.viePleine+=1
+						else:
+							print("achat impossible")
 					if choix==1:
 						#Ameliorer la puissance du joueur
-						print("+puissance, prix : %d" % (math.exp(hero.puissance)))
+						if(hero.puissance < 50 and hero.gold >= tabPrixPuiss[hero.puissance]):
+							hero.gold-=tabPrixPuiss[hero.puissance]
+							hero.puissance+=1
+						else:
+							print("achat impossible")
 					if choix==2:
 						#Ameliorer la vitesse de tir du joueur
-						print("+vitesseTir, prix : %d" % (math.exp(hero.vitesseTir)))
+						if(hero.vitesseTir < 10 and hero.gold >= tabPrixVitTir[hero.vitesseTir]):
+							hero.gold-=tabPrixVitTir[hero.vitesseTir]
+							hero.vitesseTir+=1
+						else:
+							print("achat impossible")
 					if choix==3:
 						#Ameliorer la vitesse de deplacement du joueur
-						print("+vitesseDepl, prix : %d" % (math.exp(hero.vitesseDepl)))
+						if(hero.vitesseDepl < 10 and hero.gold >= tabPrixVitDep[hero.vitesseDepl]):
+							hero.gold-=tabPrixVitDep[hero.vitesseDepl]
+							hero.vitesseDepl+=1
+						else:
+							print("achat impossible")
 					if choix==4:
 						menuUpgrades=0
 						hero.vieCourante = hero.viePleine
@@ -107,13 +152,14 @@ def upgrades(screen,hero):
 			screen.blit(bgUpgrades.image,bgUpgrades.rect)
 			select.rect.centery = selectPos[choix]
 			screen.blit(select.image,select.rect)
-			# initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
-			myfont = pygame.font.SysFont("monospace", 30)
-			myfont.set_bold(1)
 
 			# render text
 			label = myfont.render(str(hero.gold), 1, (0,0,0))
 			screen.blit(label, (490, 144))
+			screen.blit(prixVital, (675,206))
+			screen.blit(prixPuiss, (675,254))
+			screen.blit(prixVitTir, (675,299))
+			screen.blit(prixVitesse, (675,354))
 			pygame.display.flip()
 			screen.blit
 
