@@ -15,7 +15,7 @@ def play(screen,varOptions):
 	pygame.init()
 # Background + Zone ---------------------------------------------------------------------
 	background = util.load_sprite("background.png")
-	niveauActuel = 0
+	niveauActuel = 6
 	bg = util.load_sprite(levelBg[niveauActuel])
 	bg.rect = [0,31]
 
@@ -192,11 +192,12 @@ def play(screen,varOptions):
 			if niveauActuel==5:
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+50),(cBoss.sprite.rect.top+80),(cBoss.sprite.rect.left+50),600,4))
 				timerBossAttack=50
-			if niveauActuel==6:
-				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+95),(cBoss.sprite.rect.top+60),(cBoss.sprite.rect.left+95),600,1))
+			if niveauActuel==6:#84 122 26 122
+			 	lo = random.randint(0,1)
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+26+58*lo),(cBoss.sprite.rect.top+122),(cBoss.sprite.rect.left+26+58*lo),600,1))
 				timerBossAttack=40
 				if timerSp<=0:
-					EnemyBullets_rects.append(classes.Projectile(projectiles[7],(cBoss.sprite.rect.left+105),(cBoss.sprite.rect.top+60),(cBoss.sprite.rect.left+105),600,5))
+					EnemyBullets_rects.append(classes.Projectile(projectiles[7],(cBoss.sprite.rect.left+53),(cBoss.sprite.rect.top+44),(cBoss.sprite.rect.left+53),600,5))
 					timerSp=300
 			if niveauActuel==7:
 					EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+190),(cBoss.sprite.rect.top+120),(cHero.sprite.rect.centerx),(cHero.sprite.rect.centery),2))
@@ -304,7 +305,6 @@ def play(screen,varOptions):
 						i.sprite.rect=i.sprite.rect.move(i.vitesse,0)
 					else:
 						i.sprite.rect=i.sprite.rect.move(-i.vitesse,0)
-
 
 				if auto==1:
 					i.x2=0
