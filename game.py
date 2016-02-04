@@ -5,7 +5,7 @@ import util
 import classes
 import random
 
-levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png"]
+levelBg = ["bg-araignee.png","bg-chateau.png","bg-chateau.png","bg-chateau.png","bg-plaine.png","bg-plaine.png","bg-grotte.png","bg-grotte.png","bg-grotte.png"]
 projectiles = ["projectile_boss/toile.png","projectile_boss/dent.png","projectile_boss/feu.png","projectile_boss/os.png","projectile_boss/massue.png","projectile_boss/feu_blue.png","projectile_boss/sang.png","projectile_boss/feu.png","projectile_boss/feu.png"]
 mobSpawnTime = [60,50,40,30,20,10,5,4,3]
 tabVitesseTir = [0,70,65,60,55,50,45,40,30,25,20]
@@ -86,7 +86,21 @@ def play(screen,varOptions):
 		if keys[pygame.K_SPACE] or varOptions[2]==1:
 			if timerTir<=0:
 				timerTir=tabVitesseTir[cHero.vitesseTir]
-				tb = util.load_sprite("armes/rock.png")
+				if(cHero.puissance < 6):
+					tb = util.load_sprite("armes/rock.png")
+				elif(cHero.puissance > 5 and cHero.puissance < 11):
+					tb = util.load_sprite("armes/dague.png")
+				elif(cHero.puissance > 10 and cHero.puissance < 16):
+					tb = util.load_sprite("armes/lance.png")
+				elif(cHero.puissance > 15 and cHero.puissance < 26):
+					tb = util.load_sprite("armes/dague_aura.png")
+				elif(cHero.puissance > 25 and cHero.puissance < 36):
+					tb = util.load_sprite("armes/bombe.png")
+				elif(cHero.puissance > 35 and cHero.puissance < 46):
+					tb = util.load_sprite("armes/feu.png")
+				else:
+					tb = util.load_sprite("armes/feu_blue.png")
+
 				tb.rect.left = (cHero.sprite.rect.right+cHero.sprite.rect.left)/2
 				tb.rect.top = cHero.sprite.rect.top-2
 				bullet_rects.append(tb)
@@ -135,11 +149,10 @@ def play(screen,varOptions):
 		if cBoss.vieCourante<=0:
 			niveauActuel+=1
 			# si le jeu est fini
-			if(niveauActuel==8):
+			if(niveauActuel==9):
 				jeu=0
 				util.win(screen)
 			else:
-				print niveauActuel
 				cHero.gold+=cBoss.argent
 				bg = util.load_sprite(levelBg[niveauActuel])
 				bg.rect = [0,31]
@@ -149,8 +162,8 @@ def play(screen,varOptions):
 # Gestion des projectiles boss -------------------------------------------------------------
 		if timerBossAttack<=0:
 			if niveauActuel==0:
-				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+230),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+130),600,1))
-				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+250),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+350),600,1))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+230),(cBoss.sprite.rect.top+200),0,0,1))
+				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+250),(cBoss.sprite.rect.top+200),0,0,1))
 				timerBossAttack=200
 # Gestion des mouvements boss ----------------------------------------------------------
 		if timerMoveBoss<=0:
@@ -185,16 +198,36 @@ def play(screen,varOptions):
 				# i.sprite.rect.centerx et i.sprite.rect.centery = coordonnees point de depart
 				# i.x2 et i.y2 = coordonnes point d arrivee
 
-				steps_number = max( abs(i.sprite.rect.centerx-i.x2), abs(i.sprite.rect.centery-i.y2) )
+				# si les x sont 2* plus grands que les y
+				if((abs(i.x2 - i.sprite.rect.centerx)) > 2*(abs(i.y2 - i.sprite.rect.centery))):
+					if(i.x2 - i.sprite.rect.centerx > 0):
+						i.sprite.rect=i.sprite.rect.move(i.vitesse*2,0)
+					else:
+						i.sprite.rect=i.sprite.rect.move(-i.vitesse*2,0)
 
-				stepx = float(i.x2-i.sprite.rect.centerx)/steps_number
-				stepy = float(i.y2-i.sprite.rect.centery)/steps_number
+				# si les y sont 2* plus grands que les x
+				elif((abs(i.y2 - i.sprite.rect.centery)) > 2*(abs(i.x2 - i.sprite.rect.centerx))):
+					if(i.y2 - i.sprite.rect.centery > 0):
+						i.sprite.rect=i.sprite.rect.move(0,i.vitesse*2)
+					else:
+						i.sprite.rect=i.sprite.rect.move(0,-i.vitesse*2)
+				# sinon, bouge normalement
+				else:
+					if(i.y2 - i.sprite.rect.centery > 0):
+						i.sprite.rect=i.sprite.rect.move(0,i.vitesse)
+					else:
+						i.sprite.rect=i.sprite.rect.move(0,-i.vitesse)
 
-				i.sprite.rect = i.sprite.rect.move(stepx,stepy)
+					if(i.x2 - i.sprite.rect.centerx > 0):
+						i.sprite.rect=i.sprite.rect.move(i.vitesse,0)
+					else:
+						i.sprite.rect=i.sprite.rect.move(-i.vitesse,0)
+
 
 				if i.x2==cHero.sprite.rect.centerx and i.y2==cHero.sprite.rect.centery:
 					i.x2=0
 					i.y2=0
+
 				screen.blit(i.sprite.image,i.sprite.rect)
 			ebullet_vdb+=1
 
