@@ -131,8 +131,8 @@ def play(screen,varOptions):
 				cBoss = classes.Enemy(classes.bosses[niveauActuel])
 				bg =  util.load_sprite(levelBg[niveauActuel])
 				bg.rect = [0,31]
-				for k in mob_rects:
-					mob_rects = []
+				mob_rects = []
+				EnemyBullets_rects = []
 # Gestion si boss mort ---------------------------------------------------------------------
 		if cBoss.vieCourante<=0:
 			niveauActuel+=1
@@ -140,8 +140,8 @@ def play(screen,varOptions):
 			bg = util.load_sprite(levelBg[niveauActuel])
 			bg.rect = [0,31]
 			cBoss = classes.Enemy(classes.bosses[niveauActuel])
-			for k in mob_rects:
-				mob_rects = []
+			mob_rects = []
+			EnemyBullets_rects = []
 # Gestion des projectiles boss -------------------------------------------------------------
 		if timerBossAttack<=0:
 			EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],230,200,0,0,2))
