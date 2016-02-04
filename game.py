@@ -47,6 +47,7 @@ def play(screen,varOptions):
 	mob_rects = []
 
 	timerBossAttack = 50
+	timerMoveBoss = 50
 	EnemyBullets_rects = []
 
 	vie = util.load_sprite("vie.png")
@@ -62,6 +63,7 @@ def play(screen,varOptions):
 		timerMenu-=1
 		timerMobSpawn-=1
 		timerBossAttack-=1
+		timerMoveBoss-=1
 # Gestion des touches clavier --------------------------------------------------------------
 		keys = pygame.key.get_pressed()
 
@@ -144,6 +146,14 @@ def play(screen,varOptions):
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+230),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+130),600,1))
 				EnemyBullets_rects.append(classes.Projectile(projectiles[niveauActuel],(cBoss.sprite.rect.left+250),(cBoss.sprite.rect.top+200),(cBoss.sprite.rect.left+350),600,1))
 				timerBossAttack=200
+# Gestion des mouvements boss ----------------------------------------------------------
+		if timerMoveBoss<=0:
+			if niveauActuel==0:
+				if (cBoss.sprite.rect.centerx<cHero.sprite.rect.centerx):
+					cBoss.sprite.rect = cBoss.sprite.rect.move(1,0)
+				elif (cBoss.sprite.rect.centerx>cHero.sprite.rect.centerx):
+					cBoss.sprite.rect = cBoss.sprite.rect.move(-1,0)
+				timerMoveBoss=5
 # Blit du background + zone de combat ---------------------------------------------------
 		screen.blit(background.image,background.rect)
 		screen.blit(bg.image,bg.rect)
