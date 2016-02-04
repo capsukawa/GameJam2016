@@ -99,7 +99,7 @@ def upgrades(screen,hero):
 			else:
 				prixVitTir = myfont.render("-", 1, (0,0,0))
 
-			if(hero.vitesseDepl < 10):
+			if(hero.vitesseDepl < 5):
 				prixVitesse = myfont.render(str(tabPrixVitDep[hero.vitesseDepl]), 1, (0,0,0))
 			else:
 				prixVitesse = myfont.render("-", 1, (0,0,0))
